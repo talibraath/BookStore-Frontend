@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useCart } from '@/contexts/CartContext';
 import { ShoppingCart, Eye, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
@@ -14,13 +15,15 @@ interface BookCardProps {
 export function BookCard({ book, onAddToCart }: BookCardProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+  const { addToCart } = useCart();
 
   const handleAddToCart = async () => {
-    if (!onAddToCart) return;
-    
     setIsLoading(true);
     try {
-      await onAddToCart(book.id, 1);
+      addToCart(book, 1);
+      if (onAddToCart) {
+        await onAddToCart(book.id, 1);
+      }
     } catch (error) {
       console.error('Error adding to cart:', error);
     } finally {

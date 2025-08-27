@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { BookOpen, ShoppingCart, User, Menu, X, LogOut, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
+import { useCart } from '@/contexts/CartContext';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,6 +16,7 @@ import { Badge } from '@/components/ui/badge';
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, logout, isAuthenticated, isAdmin } = useAuth();
+  const { totalItems } = useCart();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -53,9 +55,14 @@ export function Header() {
 
           {/* Right side actions */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" size="icon" asChild>
+            <Button variant="ghost" size="icon" asChild className="relative">
               <Link to="/cart">
                 <ShoppingCart className="h-5 w-5" />
+                {totalItems > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-accent text-accent-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
+                    {totalItems > 99 ? '99+' : totalItems}
+                  </span>
+                )}
               </Link>
             </Button>
 
@@ -153,6 +160,11 @@ export function Header() {
                 >
                   <ShoppingCart className="mr-2 h-5 w-5" />
                   Cart
+                  {totalItems > 0 && (
+                    <span className="ml-2 bg-accent text-accent-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
+                      {totalItems}
+                    </span>
+                  )}
                 </Link>
                 
                 {isAuthenticated ? (
