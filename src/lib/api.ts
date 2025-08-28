@@ -187,6 +187,21 @@ class ApiClient {
     });
   }
 
+  // Password reset endpoints
+  async requestPasswordReset(email: string): Promise<{ message: string }> {
+    return this.request<{ message: string }>('/auth/password-reset-request/', {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+    });
+  }
+
+  async confirmPasswordReset(email: string, otp: string, new_password: string): Promise<{ message: string }> {
+    return this.request<{ message: string }>('/auth/password-reset-confirm/', {
+      method: 'POST',
+      body: JSON.stringify({ email, otp, new_password }),
+    });
+  }
+
   // Profile endpoints
   async getProfile(): Promise<User> {
     return this.request<User>('/profile/users/');
@@ -196,6 +211,13 @@ class ApiClient {
     return this.request<User>('/profile/users/', {
       method: 'PATCH',
       body: JSON.stringify(userData),
+    });
+  }
+
+  async changePassword(newPassword: string): Promise<{ message: string }> {
+    return this.request<{ message: string }>('/profile/users/change-password/', {
+      method: 'PATCH',
+      body: JSON.stringify({ new_password: newPassword }),
     });
   }
 }

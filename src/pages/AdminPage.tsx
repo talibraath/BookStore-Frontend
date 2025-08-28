@@ -188,15 +188,15 @@ export default function AdminPage() {
               </Link>
             </Button>
             <Button variant="outline" asChild className="h-auto p-4 flex-col">
-              <Link to="/admin/authors/new">
+              <Link to="/admin/authors">
                 <Plus className="h-6 w-6 mb-2" />
-                Add New Author
+                Manage Authors
               </Link>
             </Button>
             <Button variant="outline" asChild className="h-auto p-4 flex-col">
-              <Link to="/admin/categories/new">
+              <Link to="/admin/categories">
                 <Plus className="h-6 w-6 mb-2" />
-                Add New Category
+                Manage Categories
               </Link>
             </Button>
           </div>
@@ -344,7 +344,7 @@ export default function AdminPage() {
               Manage authors and book categories
             </p>
             <Button variant="outline" asChild>
-              <Link to="/admin/catalog">Manage Catalog</Link>
+              <Link to="/admin/authors">Manage Authors</Link>
             </Button>
           </CardContent>
         </Card>

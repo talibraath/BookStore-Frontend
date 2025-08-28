@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
+import { apiClient } from '@/lib/api';
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
@@ -24,23 +25,12 @@ export default function ForgotPasswordPage() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/auth/password-reset-request/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
+      await apiClient.requestPasswordReset(email);
+      toast({
+        title: "OTP sent",
+        description: "Check your email for the OTP code.",
       });
-
-      if (response.ok) {
-        toast({
-          title: "OTP sent",
-          description: "Check your email for the OTP code.",
-        });
-        setStep('otp');
-      } else {
-        throw new Error('Failed to send OTP');
-      }
+      setStep('otp');
     } catch (error) {
       toast({
         variant: "destructive",
@@ -76,27 +66,12 @@ export default function ForgotPasswordPage() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/auth/password-reset-confirm/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          otp,
-          new_password: newPassword,
-        }),
+      await apiClient.confirmPasswordReset(email, otp, newPassword);
+      toast({
+        title: "Password reset successful",
+        description: "Your password has been reset. You can now log in with your new password.",
       });
-
-      if (response.ok) {
-        toast({
-          title: "Password reset successful",
-          description: "Your password has been reset. You can now log in with your new password.",
-        });
-        navigate('/login');
-      } else {
-        throw new Error('Failed to reset password');
-      }
+      navigate('/login');
     } catch (error) {
       toast({
         variant: "destructive",

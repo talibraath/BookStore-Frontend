@@ -19,6 +19,13 @@ import ProfilePage from "./pages/ProfilePage";
 import AdminPage from "./pages/AdminPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import NotFound from "./pages/NotFound";
+import AdminBooksPage from "./pages/admin/AdminBooksPage";
+import BookFormPage from "./pages/admin/BookFormPage";
+import AdminAuthorsPage from "./pages/admin/AdminAuthorsPage";
+import AuthorFormPage from "./pages/admin/AuthorFormPage";
+import AdminCategoriesPage from "./pages/admin/AdminCategoriesPage";
+import CategoryFormPage from "./pages/admin/CategoryFormPage";
+import AdminOrdersPage from "./pages/admin/AdminOrdersPage";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +51,16 @@ const App = () => (
                 <Route path="/orders" element={<OrdersPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/admin" element={<AdminPage />} />
+                <Route path="/admin/books" element={<AdminBooksPage />} />
+                <Route path="/admin/books/new" element={<BookFormPage />} />
+                <Route path="/admin/books/edit/:id" element={<BookFormPage />} />
+                <Route path="/admin/authors" element={<AdminAuthorsPage />} />
+                <Route path="/admin/authors/new" element={<AuthorFormPage />} />
+                <Route path="/admin/authors/edit/:id" element={<AuthorFormPage />} />
+                <Route path="/admin/categories" element={<AdminCategoriesPage />} />
+                <Route path="/admin/categories/new" element={<CategoryFormPage />} />
+                <Route path="/admin/categories/edit/:id" element={<CategoryFormPage />} />
+                <Route path="/admin/orders" element={<AdminOrdersPage />} />
                 <Route path="/forgot-password" element={<ForgotPasswordPage />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
