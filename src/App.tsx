@@ -26,6 +26,7 @@ import AuthorFormPage from "./pages/admin/AuthorFormPage";
 import AdminCategoriesPage from "./pages/admin/AdminCategoriesPage";
 import CategoryFormPage from "./pages/admin/CategoryFormPage";
 import AdminOrdersPage from "./pages/admin/AdminOrdersPage";
+import OrderDetailPage from "./pages/OrderDetailPage";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +50,7 @@ const App = () => (
                 <Route path="/categories" element={<CategoriesPage />} />
                 <Route path="/cart" element={<CartPage />} />
                 <Route path="/orders" element={<OrdersPage />} />
+                <Route path="/orders/:id" element={<OrderDetailPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/admin" element={<AdminPage />} />
                 <Route path="/admin/books" element={<AdminBooksPage />} />

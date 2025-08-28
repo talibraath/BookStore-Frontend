@@ -95,6 +95,10 @@ class ApiClient {
     return this.request<Book>(`/catalog/books/${id}/`);
   }
 
+  async getOrder(id: number): Promise<Order> {
+    return this.request<Order>(`/orders/${id}/`);
+  }
+
   async createBook(book: Omit<Book, 'id'>): Promise<Book> {
     return this.request<Book>('/catalog/books/', {
       method: 'POST',
