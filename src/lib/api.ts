@@ -11,7 +11,7 @@ import type {
   PaginatedResponse 
 } from '@/types/api';
 
-const API_BASE_URL = 'http://127.0.0.1:8000';
+const API_BASE_URL = 'http://34.239.48.212:8000/';
 
 class ApiClient {
   private baseURL: string;
@@ -87,10 +87,27 @@ class ApiClient {
   }
 
   // Books endpoints
-  async getBooks(page?: number): Promise<PaginatedResponse<Book>> {
-    const params = page ? `?page=${page}` : '';
-    return this.request<PaginatedResponse<Book>>(`/catalog/books/${params}`);
-  }
+// Add queryable getBooks
+async getBooks(params?: {
+  page?: number;
+  page_size?: number;
+  search?: string;
+  category?: string | number; // ID
+  author?: string | number;   // ID
+  ordering?: string;          // 'title' | '-price' | 'pub_date' | '-pub_date'
+}): Promise<PaginatedResponse<Book>> {
+  const qp = new URLSearchParams();
+  if (params?.page) qp.set('page', String(params.page));
+  qp.set('page_size', String(params?.page_size ?? 20));
+  if (params?.search) qp.set('search', params.search);
+  if (params?.category && params.category !== 'all') qp.set('category', String(params.category));
+  if (params?.author && params.author !== 'all') qp.set('author', String(params.author));
+  if (params?.ordering) qp.set('ordering', params.ordering);
+
+  const suffix = qp.toString() ? `?${qp.toString()}` : '';
+  return this.request<PaginatedResponse<Book>>(`/catalog/books/${suffix}`);
+}
+
 
   async getBook(id: number): Promise<Book> {
     return this.request<Book>(`/catalog/books/${id}/`);

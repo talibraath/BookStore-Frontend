@@ -37,66 +37,44 @@ export default function BooksPage() {
   useEffect(() => {
     fetchFilters();
   }, []);
+const PAGE_SIZE = 12;
 
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response: PaginatedResponse<Book> = await apiClient.getBooks(currentPage);
-      
-      // TODO: Implement search and filtering on the backend
-      // For now, we'll do client-side filtering as a demo
-      let filteredBooks = response.results;
+const ordering = (() => {
+  switch (sortBy) {
+    case 'price_low': return 'price';
+    case 'price_high': return '-price';
+    case 'date_new': return '-pub_date';
+    case 'date_old': return 'pub_date';
+    default: return 'title';
+  }
+})();
 
-      if (searchQuery) {
-        filteredBooks = filteredBooks.filter(book =>
-          book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          (book.description && book.description.toLowerCase().includes(searchQuery.toLowerCase()))
-        );
-      }
+const fetchData = async () => {
+  setLoading(true);
+  try {
+    const res = await apiClient.getBooks({
+      page: currentPage,
+      page_size: PAGE_SIZE,
+      search: searchQuery || undefined,
+      category: selectedCategory || undefined,
+      author: selectedAuthor || undefined,
+      ordering,
+    });
 
-   if (selectedCategory && selectedCategory !== "all") {
-  filteredBooks = filteredBooks.filter(
-    (book) => book.category.toString() === selectedCategory
-  );
-}
-
-if (selectedAuthor && selectedAuthor !== "all") {
-  filteredBooks = filteredBooks.filter(
-    (book) => book.author.toString() === selectedAuthor
-  );
-}
-
-
-      // Sort books
-      filteredBooks.sort((a, b) => {
-        switch (sortBy) {
-          case 'price_low':
-            return parseFloat(a.price) - parseFloat(b.price);
-          case 'price_high':
-            return parseFloat(b.price) - parseFloat(a.price);
-          case 'date_new':
-            return new Date(b.pub_date).getTime() - new Date(a.pub_date).getTime();
-          case 'date_old':
-            return new Date(a.pub_date).getTime() - new Date(b.pub_date).getTime();
-          default:
-            return a.title.localeCompare(b.title);
-        }
-      });
-
-      setBooks(filteredBooks);
-      setTotalCount(response.count);
-      setTotalPages(Math.ceil(response.count / 20)); // Assuming 20 items per page
-    } catch (error) {
-      console.error('Error fetching books:', error);
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Failed to load books. Please try again.",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+    setBooks(res.results);
+    setTotalCount(res.count);
+    setTotalPages(Math.max(1, Math.ceil(res.count / PAGE_SIZE)));
+  } catch (error) {
+    console.error('Error fetching books:', error);
+    toast({
+      variant: 'destructive',
+      title: 'Error',
+      description: 'Failed to load books. Please try again.',
+    });
+  } finally {
+    setLoading(false);
+  }
+};
 
   const fetchFilters = async () => {
     try {
