@@ -127,7 +127,7 @@ export default function RegisterPage() {
                 />
               </div>
 
-              <div className="space-y-2">
+              {/* <div className="space-y-2">
                 <Label htmlFor="role">Account Type</Label>
                 <Select
                   value={formData.role}
@@ -143,7 +143,7 @@ export default function RegisterPage() {
                     <SelectItem value="admin">Admin</SelectItem>
                   </SelectContent>
                 </Select>
-              </div>
+              </div> */}
 
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>

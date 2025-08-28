@@ -70,6 +70,11 @@ class ApiClient {
   }
 
   async logout(): Promise<void> {
+        // Clear local storage
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    localStorage.removeItem('user_role');
+    localStorage.removeItem('username');
     const refreshToken = localStorage.getItem('refresh_token');
     if (refreshToken) {
       await this.request('/auth/logout/', {
@@ -78,11 +83,7 @@ class ApiClient {
       });
     }
     
-    // Clear local storage
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
-    localStorage.removeItem('user_role');
-    localStorage.removeItem('username');
+
   }
 
   // Books endpoints

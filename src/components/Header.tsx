@@ -80,12 +80,27 @@ export function Header() {
                       Profile
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
+               
+
+                {user.role == 'customer' && (
+                    <DropdownMenuItem asChild>
                     <Link to="/orders" className="flex items-center">
                       <Settings className="mr-2 h-4 w-4" />
                       My Orders
                     </Link>
                   </DropdownMenuItem>
+                  )}
+
+                  {isAdmin && (
+                    <DropdownMenuItem asChild>
+                      <Link to="/admin/orders" className="flex items-center">
+                        <Settings className="mr-2 h-4 w-4" />
+                        Manage Orders
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
+                
+
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleLogout} className="flex items-center text-destructive">
                     <LogOut className="mr-2 h-4 w-4" />

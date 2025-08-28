@@ -54,13 +54,18 @@ export default function BooksPage() {
         );
       }
 
-      if (selectedCategory) {
-        filteredBooks = filteredBooks.filter(book => book.category.toString() === selectedCategory);
-      }
+   if (selectedCategory && selectedCategory !== "all") {
+  filteredBooks = filteredBooks.filter(
+    (book) => book.category.toString() === selectedCategory
+  );
+}
 
-      if (selectedAuthor) {
-        filteredBooks = filteredBooks.filter(book => book.author.toString() === selectedAuthor);
-      }
+if (selectedAuthor && selectedAuthor !== "all") {
+  filteredBooks = filteredBooks.filter(
+    (book) => book.author.toString() === selectedAuthor
+  );
+}
+
 
       // Sort books
       filteredBooks.sort((a, b) => {
@@ -164,35 +169,41 @@ export default function BooksPage() {
             </div>
           </div>
 
-          {/* Category Filter */}
-          <Select value={selectedCategory} onValueChange={(value) => handleFilterChange('category', value)}>
-            <SelectTrigger>
-              <SelectValue placeholder="All Categories" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="">All Categories</SelectItem>
-              {categories.map((category) => (
-                <SelectItem key={category.id} value={category.id.toString()}>
-                  {category.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+         {/* Category Filter */}
+<Select
+  value={selectedCategory || "all"}
+  onValueChange={(value) => handleFilterChange("category", value === "all" ? "" : value)}
+>
+  <SelectTrigger>
+    <SelectValue placeholder="All Categories" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="all">All Categories</SelectItem>
+    {categories.map((category) => (
+      <SelectItem key={category.id} value={category.id.toString()}>
+        {category.name}
+      </SelectItem>
+    ))}
+  </SelectContent>
+</Select>
 
-          {/* Author Filter */}
-          <Select value={selectedAuthor} onValueChange={(value) => handleFilterChange('author', value)}>
-            <SelectTrigger>
-              <SelectValue placeholder="All Authors" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="">All Authors</SelectItem>
-              {authors.map((author) => (
-                <SelectItem key={author.id} value={author.id.toString()}>
-                  {author.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+{/* Author Filter */}
+<Select
+  value={selectedAuthor || "all"}
+  onValueChange={(value) => handleFilterChange("author", value === "all" ? "" : value)}
+>
+  <SelectTrigger>
+    <SelectValue placeholder="All Authors" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="all">All Authors</SelectItem>
+    {authors.map((author) => (
+      <SelectItem key={author.id} value={author.id.toString()}>
+        {author.name}
+      </SelectItem>
+    ))}
+  </SelectContent>
+</Select>
 
           {/* Sort */}
           <Select value={sortBy} onValueChange={(value) => handleFilterChange('sort', value)}>

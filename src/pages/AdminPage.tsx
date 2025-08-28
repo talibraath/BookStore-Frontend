@@ -297,7 +297,10 @@ export default function AdminPage() {
                         {order.status}
                       </Badge>
                       <Button variant="ghost" size="icon">
-                        <Eye className="h-4 w-4" />
+                        <Link to={`/orders/${order.id}`}>
+                                         <Eye className="h-4 w-4" />
+                                            </Link>
+                       
                       </Button>
                     </div>
                   </div>
