@@ -27,52 +27,71 @@ import AdminCategoriesPage from "./pages/admin/AdminCategoriesPage";
 import CategoryFormPage from "./pages/admin/CategoryFormPage";
 import AdminOrdersPage from "./pages/admin/AdminOrdersPage";
 import OrderDetailPage from "./pages/OrderDetailPage";
+import MoodRecommendationsPage from "@/pages/MoodRecommendationsPage";
+import { useState } from "react";
+import ChatButton from "@/components/ChatButton";
+import ChatModal from "@/components/ChatModal";
+import ChatSheet from "./components/ChatSheet";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <CartProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Header />
-            <main>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/register" element={<RegisterPage />} />
-                <Route path="/books" element={<BooksPage />} />
-                <Route path="/books/:id" element={<BookDetailPage />} />
-                <Route path="/authors" element={<AuthorsPage />} />
-                <Route path="/categories" element={<CategoriesPage />} />
-                <Route path="/cart" element={<CartPage />} />
-                <Route path="/orders" element={<OrdersPage />} />
-                <Route path="/orders/:id" element={<OrderDetailPage />} />
-                <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/admin" element={<AdminPage />} />
-                <Route path="/admin/books" element={<AdminBooksPage />} />
-                <Route path="/admin/books/new" element={<BookFormPage />} />
-                <Route path="/admin/books/edit/:id" element={<BookFormPage />} />
-                <Route path="/admin/authors" element={<AdminAuthorsPage />} />
-                <Route path="/admin/authors/new" element={<AuthorFormPage />} />
-                <Route path="/admin/authors/edit/:id" element={<AuthorFormPage />} />
-                <Route path="/admin/categories" element={<AdminCategoriesPage />} />
-                <Route path="/admin/categories/new" element={<CategoryFormPage />} />
-                <Route path="/admin/categories/edit/:id" element={<CategoryFormPage />} />
-                <Route path="/admin/orders" element={<AdminOrdersPage />} />
-                <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </main>
-          </BrowserRouter>
-        </TooltipProvider>
-      </CartProvider>
-    </AuthProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  const [chatOpen, setChatOpen] = useState(false);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <CartProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Header />
+              <main>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/register" element={<RegisterPage />} />
+                  <Route path="/books" element={<BooksPage />} />
+                  <Route path="/books/:id" element={<BookDetailPage />} />
+                  <Route path="/authors" element={<AuthorsPage />} />
+                  <Route path="/categories" element={<CategoriesPage />} />
+                  <Route path="/cart" element={<CartPage />} />
+                  <Route path="/orders" element={<OrdersPage />} />
+                  <Route path="/orders/:id" element={<OrderDetailPage />} />
+                  <Route path="/profile" element={<ProfilePage />} />
+                  <Route path="/admin" element={<AdminPage />} />
+                  <Route path="/admin/books" element={<AdminBooksPage />} />
+                  <Route path="/admin/books/new" element={<BookFormPage />} />
+                  <Route path="/admin/books/edit/:id" element={<BookFormPage />} />
+                  <Route path="/admin/authors" element={<AdminAuthorsPage />} />
+                  <Route path="/admin/authors/new" element={<AuthorFormPage />} />
+                  <Route path="/admin/authors/edit/:id" element={<AuthorFormPage />} />
+                  <Route path="/admin/categories" element={<AdminCategoriesPage />} />
+                  <Route path="/admin/categories/new" element={<CategoryFormPage />} />
+                  <Route path="/admin/categories/edit/:id" element={<CategoryFormPage />} />
+                  <Route path="/admin/orders" element={<AdminOrdersPage />} />
+                  <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+
+                  <Route path="/recommendations/mood" element={<MoodRecommendationsPage />} />
+
+                  {/* CATCH-ALL */}
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </main>
+
+              {/* 👇 Global Chatbot components */}
+             <ChatButton onClick={() => setChatOpen(true)} />
+      <ChatSheet open={chatOpen} onOpenChange={setChatOpen} />
+            </BrowserRouter>
+          </TooltipProvider>
+        </CartProvider>
+      </AuthProvider>
+    </QueryClientProvider>
+  );
+};
+
+
+
 
 export default App;

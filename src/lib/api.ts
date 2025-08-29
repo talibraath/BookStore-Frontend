@@ -11,7 +11,7 @@ import type {
   PaginatedResponse 
 } from '@/types/api';
 
-const API_BASE_URL = 'http://13.217.103.6:8000/';
+const API_BASE_URL = 'http://127.0.0.1:8000/';
 
 class ApiClient {
   private baseURL: string;
@@ -242,6 +242,37 @@ async getBooks(params?: {
       body: JSON.stringify({ new_password: newPassword }),
     });
   }
+
+  // ================== MOOD RECOMMENDATIONS ==================
+  async getMoodRecommendations(params: { mood: string; prompt?: string; limit?: number }): Promise<{ 
+    mood: string; 
+    prompt: string; 
+    ai_used: boolean; 
+    results: Book[] 
+  }> {
+    const qp = new URLSearchParams();
+    qp.set('mood', params.mood);
+    if (params.prompt) qp.set('prompt', params.prompt);
+    if (params.limit) qp.set('limit', String(params.limit));
+
+    const suffix = `?${qp.toString()}`;
+    return this.request(`/recommendations/mood-ai/${suffix}`);
+  }
+// Add/ensure this method exists:
+  async getBookSummary(bookId: number): Promise<{ summary: string }> {
+    // NOTE: endpoint WITHOUT a leading slash – buildUrl will add exactly one.
+    const data = await this.request<any>(`recommendations/book-summary/${bookId}/`);
+    // Normalize to {summary: string}
+    const summary =
+      (data && typeof data === 'object' && ('summary' in data)) ? data.summary :
+      (data && data.data && data.data.summary) ? data.data.summary :
+      (typeof data === 'string') ? data :
+      'No summary available.';
+    return { summary: String(summary) };
+  }
+
 }
+
+
 
 export const apiClient = new ApiClient(API_BASE_URL);

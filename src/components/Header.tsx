@@ -4,6 +4,7 @@ import { BookOpen, ShoppingCart, User, Menu, X, LogOut, Settings } from 'lucide-
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useCart } from '@/contexts/CartContext';
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -44,6 +45,9 @@ export function Header() {
             </Link>
             <Link to="/categories" className="text-foreground hover:text-accent transition-colors font-medium">
               Categories
+            </Link>
+            <Link to="/recommendations/mood" className="text-foreground hover:text-accent transition-colors font-medium">
+             Mood Recommendations
             </Link>
             {isAdmin && (
               <Link to="/admin" className="text-foreground hover:text-accent transition-colors font-medium">

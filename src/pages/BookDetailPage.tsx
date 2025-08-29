@@ -132,16 +132,24 @@ export default function BookDetailPage() {
         {/* Book Cover */}
         <div className="space-y-4">
           <div className="aspect-[3/4] bg-gradient-primary rounded-lg shadow-book flex items-center justify-center text-primary-foreground p-8">
-            <div className="text-center">
-              <h2 className="text-2xl font-bold leading-tight mb-4">{book.title}</h2>
-              <p className="text-lg opacity-80">by Author ID: {book.author}</p>
-            </div>
+            <img
+                    src={`https://picsum.photos/600/800?random=${book.title}`}
+                    alt={book.title}
+                    className="h-full w-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
+                    loading="lazy"
+                  />
           </div>
           
           {/* Additional Images Placeholder */}
           <div className="grid grid-cols-4 gap-2">
             {[1, 2, 3, 4].map((i) => (
               <div key={i} className="aspect-[3/4] bg-muted rounded border-2 border-transparent hover:border-accent cursor-pointer transition-colors">
+                 <img
+                    src={`https://picsum.photos/600/800?random=${i}`}
+                    alt={book.title}
+                    className="h-full w-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
+                    loading="lazy"
+                  />
               </div>
             ))}
           </div>
