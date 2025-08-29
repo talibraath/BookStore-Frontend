@@ -39,17 +39,19 @@ export function BookCard({ book, onAddToCart }: BookCardProps) {
     return new Date(dateString).getFullYear();
   };
 
+  // Generate random book cover with picsum
+  const bookImage = `https://picsum.photos/300/400?random=${book.title}`;
+
   return (
     <Card className="group h-full flex flex-col shadow-book hover:shadow-elevated transition-all duration-300 hover:-translate-y-1 overflow-hidden">
       <div className="relative">
-        {/* Book cover placeholder */}
-        <div className="aspect-[3/4] bg-gradient-primary flex items-center justify-center text-primary-foreground p-4">
-          <div className="text-center">
-            <div className="text-lg font-bold leading-tight mb-2">{book.title}</div>
-            <div className="text-sm opacity-80">{book.author_name || `Author ID: ${book.author}`}</div>
-          </div>
-        </div>
-        
+        {/* Book cover */}
+        <img
+          src={bookImage}
+          alt={book.title}
+          className="w-full aspect-[3/4] object-cover"
+        />
+
         {/* Stock badge */}
         {book.stock <= 5 && book.stock > 0 && (
           <Badge variant="destructive" className="absolute top-2 left-2">

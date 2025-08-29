@@ -246,12 +246,16 @@ const fetchData = async () => {
             : "space-y-4"
         }>
           {books.map((book) => (
-            <BookCard
-              key={book.id}
-              book={book}
-              onAddToCart={handleAddToCart}
-            />
-          ))}
+  <BookCard
+    key={book.id}
+    book={{
+      ...book,
+      image: `https://picsum.photos/300/400?random=${book.id}`
+    }}
+    onAddToCart={handleAddToCart}
+  />
+))}
+
         </div>
       )}
 
