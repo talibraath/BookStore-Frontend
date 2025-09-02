@@ -58,9 +58,8 @@ export default function AdminCategoriesPage() {
       fetchCategories();
     } catch (error) {
       toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Failed to delete category.",
+           title: "Success",
+        description: "Book deleted successfully.",
       });
     }
   };

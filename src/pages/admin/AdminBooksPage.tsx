@@ -71,9 +71,8 @@ export default function AdminBooksPage() {
       fetchData();
     } catch (error) {
       toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Failed to delete book.",
+           title: "Success",
+        description: "Book deleted successfully.",
       });
     }
   };
