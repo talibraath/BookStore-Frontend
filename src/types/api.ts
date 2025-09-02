@@ -51,6 +51,8 @@ export interface Book {
   category: number;
   author_name?: string;
   category_name?: string;
+  category_id?: Category;
+  author_id?: Author;
 }
 
 export interface OrderItem {

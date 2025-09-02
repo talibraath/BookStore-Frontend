@@ -160,7 +160,7 @@ export default function BookDetailPage() {
           <div>
             <h1 className="text-3xl font-bold mb-2">{book.title}</h1>
             <p className="text-lg text-muted-foreground mb-4">
-              by Author ID: {book.author}
+              by Author: {book.author_name || 'Unknown Author'}
             </p>
             
             {/* Rating Placeholder */}
@@ -203,8 +203,8 @@ export default function BookDetailPage() {
                 </div>
                 <div className="flex items-center space-x-2">
                   <span className="text-muted-foreground">Category:</span>
-                  <Link to={`/books?category=${book.category}`} className="text-accent hover:underline">
-                    Category ID: {book.category}
+                  <Link to={`/books?category=${book.id}`} className="text-accent hover:underline">
+                    {book.category_name || 'Unknown'}
                   </Link>
                 </div>
               </div>

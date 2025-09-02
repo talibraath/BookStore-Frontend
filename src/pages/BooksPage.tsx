@@ -329,7 +329,7 @@ export default function BooksPage() {
 
                   <div className="p-4">
                     {/* Category badge (if present) */}
-                    {'category' in book && book.category && typeof book.category === 'object' && (
+                    {'category' in book && book.category_name && typeof book.category_name === 'object' && (
                       <span className="inline-block text-[11px] font-medium bg-indigo-50 text-indigo-600 px-2 py-1 rounded-full mb-2">
                         {(book as any).category?.name ?? 'Category'}
                       </span>
@@ -337,7 +337,7 @@ export default function BooksPage() {
                     <h3 className="font-semibold text-base line-clamp-2">{book.title}</h3>
                     {book?.author && (
                       <p className="text-sm text-muted-foreground mt-1 line-clamp-1">
-                        {String(book.author)}
+                        {String(book.author_name) || 'Unknown Author'}
                       </p>
                     )}
                     {typeof (book as any)?.price !== 'undefined' && (
