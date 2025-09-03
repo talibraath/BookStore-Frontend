@@ -11,7 +11,7 @@ import type {
   PaginatedResponse 
 } from '@/types/api';
 
-const API_BASE_URL = 'https://book-store-api-4tbu.onrender.com';
+const API_BASE_URL = 'http://127.0.0.1:8000';
 
 class ApiClient {
   private baseURL: string;
@@ -261,7 +261,7 @@ async getBooks(params?: {
 // Add/ensure this method exists:
   async getBookSummary(bookId: number): Promise<{ summary: string }> {
     // NOTE: endpoint WITHOUT a leading slash – buildUrl will add exactly one.
-    const data = await this.request<any>(`recommendations/book-summary/${bookId}/`);
+    const data = await this.request<any>(`/recommendations/book-summary/${bookId}/`);
     // Normalize to {summary: string}
     const summary =
       (data && typeof data === 'object' && ('summary' in data)) ? data.summary :
